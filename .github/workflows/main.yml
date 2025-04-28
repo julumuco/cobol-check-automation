@@ -2,7 +2,7 @@ name: COBOL Check Automation
 on:
   push:
     branches: [ main ]
-    
+     
 jobs:
   cobol-check:
     runs-on: ubuntu-latest
