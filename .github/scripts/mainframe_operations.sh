@@ -55,7 +55,7 @@ DSNAME_PROGRAM=$(echo "$program" | cut -c1-8)
 DSNAME_USER=$(echo "$ZOWE_USERNAME" | cut -c1-8)
 # Upload the generated COBOL test file to MVS
 if [[ -f "CC##99.CBL" ]]; then
-  zowe zos-files upload file-to-data-set "CC##99.CBL" "//'${DSNAME_USER}.CBL(${DSNAME_PROGRAM})'" \
+  zowe zos-files upload file-to-data-set "CC##99.CBL" "//${DSNAME_USER}.CBL(${DSNAME_PROGRAM})" \
     --user "$ZOWE_USERNAME" \
     --password "$ZOWE_PASSWORD" \
     --host "$ZOWE_HOST" \
@@ -68,7 +68,7 @@ fi
 
 # Upload the existing JCL to MVS
 if [[ -f "${program}.JCL" ]]; then
-  zowe zos-files upload file-to-data-set "${program}.JCL" "//'${DSNAME_USER}.JCL(${DSNAME_PROGRAM})'" \
+  zowe zos-files upload file-to-data-set "${program}.JCL" "//${DSNAME_USER}.JCL(${DSNAME_PROGRAM})" \
     --user "$ZOWE_USERNAME" \
     --password "$ZOWE_PASSWORD" \
     --host "$ZOWE_HOST" \
