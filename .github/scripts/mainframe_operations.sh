@@ -47,7 +47,13 @@ for program in NUMBERS EMPPAY DEPTPAY; do
     echo "❌ ${program}.JCL not found"
   fi
 
-  # Upload the generated COBOL test file to MVS
+echo "ZOWE_USERNAME = $ZOWE_USERNAME"
+echo "program = $program" 
+
+# Truncate or Normalize Imputs
+DSNAME_PROGRAM=$(echo "$program" | cut -c1-8)
+DSNAME_USER=$(echo "$ZOWE_USERNAME" | cut -c1-8)
+# Upload the generated COBOL test file to MVS
 if [[ -f "CC##99.CBL" ]]; then
   zowe zos-files upload file-to-data-set "CC##99.CBL" "//'${ZOWE_USERNAME}.CBL($program)'" \
     --user "$ZOWE_USERNAME" \
