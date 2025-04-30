@@ -55,7 +55,7 @@ DSNAME_PROGRAM=$(echo "$program" | cut -c1-8)
 # DSNAME_USER=$(echo "$ZOWE_USERNAME" | cut -c1-8)
 # Upload the generated COBOL test file to MVS
 if [[ -f "CC##99.CBL" ]]; then
-  zowe zos-files upload file-to-data-set "CC##99.CBL" "//${ZOWE_USERNAME}.CBL(${DSNAME_PROGRAM})" \
+  zowe zos-files upload file-to-data-set "CC##99.CBL" "${ZOWE_USERNAME}.CBL(${DSNAME_PROGRAM})" \
     --user "$ZOWE_USERNAME" \
     --password "$ZOWE_PASSWORD" \
     --host "$ZOWE_HOST" \
