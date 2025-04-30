@@ -37,7 +37,7 @@ fi
 echo "📤 Uploading contents of ./cobol-check to USS..."
 zowe zos-files upload dir-to-uss "./cobol-check" "$USS_DIR" \
     --recursive \
-    --binary-files "bin/*.jar" \
+    --binary-files "bin/cobol-check-0.2.17.jar" \
     --user "$ZOWE_USERNAME" \
     --password "$ZOWE_PASSWORD" \
     --host "$ZOWE_HOST" \
