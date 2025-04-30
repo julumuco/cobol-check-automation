@@ -46,6 +46,33 @@ for program in NUMBERS EMPPAY DEPTPAY; do
   else
     echo "❌ ${program}.JCL not found"
   fi
+
+  # Upload the generated COBOL test file to MVS
+if [[ -f "CC##99.CBL" ]]; then
+  zowe zos-files upload file-to-data-set "CC##99.CBL" "//'${ZOWE_USERNAME}.CBL($program)'" \
+    --user "$ZOWE_USERNAME" \
+    --password "$ZOWE_PASSWORD" \
+    --host "$ZOWE_HOST" \
+    --port "$ZOWE_PORT" \
+    --reject-unauthorized false
+  echo "📤 Uploaded CC##99.CBL to ${ZOWE_USERNAME}.CBL($program)"
+else
+  echo "❌ CC##99.CBL not found — skipping COBOL upload for $program"
+fi
+
+# Upload the existing JCL to MVS
+if [[ -f "${program}.JCL" ]]; then
+  zowe zos-files upload file-to-data-set "${program}.JCL" "//'${ZOWE_USERNAME}.JCL($program)'" \
+    --user "$ZOWE_USERNAME" \
+    --password "$ZOWE_PASSWORD" \
+    --host "$ZOWE_HOST" \
+    --port "$ZOWE_PORT" \
+    --reject-unauthorized false
+  echo "📤 Uploaded ${program}.JCL to ${ZOWE_USERNAME}.JCL($program)"
+else
+  echo "❌ ${program}.JCL not found — cannot upload to MVS"
+fi
+
 done
 
 echo "✅ Mainframe operations completed"
