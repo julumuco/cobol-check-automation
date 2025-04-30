@@ -17,10 +17,10 @@ jobs:
         distribution: 'temurin'
         java-version: '11'
 
-    - name: Install GnuCOBOL
+    - name: Install GnuCOBOL compiler
       run: |
         sudo apt update
-        sudo apt install -y open-cobol
+        sudo apt install -y gnucobol4
 
     - name: Install Zowe CLI and export to PATH
       run: |
