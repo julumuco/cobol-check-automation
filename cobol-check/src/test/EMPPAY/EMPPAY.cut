@@ -18,7 +18,7 @@
       PERFORM PAYMENT-WEEKLY
       EXPECT EMP-PAY-WEEK >= 1600
       
-      TestCase 'checks the EMP-PAY-MONTHLY to be greater than 9600'
+      TestCase 'checks the EMP-PAY-MONTHLY to be greater than 9600 jlm'
       MOVE 160 TO EMP-HOURS
       MOVE 1600 TO EMP-PAY-WEEK
       PERFORM PAYMENT-MONTHLY
