@@ -68,7 +68,7 @@ fi
 
 # Upload the existing JCL to MVS
 if [[ -f "${program}.JCL" ]]; then
-  zowe zos-files upload file-to-data-set "${program}.JCL" "//${ZOWE_USERNAME}.JCL(${DSNAME_PROGRAM})" \
+  zowe zos-files upload file-to-data-set "${program}.JCL" "${ZOWE_USERNAME}.JCL(${DSNAME_PROGRAM})" \
     --user "$ZOWE_USERNAME" \
     --password "$ZOWE_PASSWORD" \
     --host "$ZOWE_HOST" \
