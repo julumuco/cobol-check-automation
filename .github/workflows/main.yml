@@ -1,31 +1,56 @@
 name: COBOL Check Automation
+
 on:
   push:
     branches: [ main ]
-     
+
 jobs:
   cobol-check:
     runs-on: ubuntu-latest
-    
+
     steps:
     - uses: actions/checkout@v2
+
     - name: Set up Java
       uses: actions/setup-java@v2
       with:
         distribution: 'temurin'
         java-version: '11'
+
+    - name: Install Zowe CLI and export to PATH
+      run: |
+        npm install -g @zowe/cli
+        echo "$(npm bin -g)" >> $GITHUB_PATH
+
+    - name: Set up Zowe CLI Profile
+      env:
+        ZOWE_USERNAME: ${{ secrets.ZOWE_USERNAME }}
+        ZOWE_PASSWORD: ${{ secrets.ZOWE_PASSWORD }}
+      run: |
+        zowe config set profiles.zosmf.properties.host 204.90.115.200
+        zowe config set profiles.zosmf.properties.port 10443
+        zowe config set profiles.zosmf.properties.username "$ZOWE_USERNAME"
+        zowe config set profiles.zosmf.properties.password "$ZOWE_PASSWORD"
+        zowe config set profiles.zosmf.properties.rejectUnauthorized false
+        zowe config set profiles.zosmf.type zosmf
+
     - name: Setup Mainframe Environment and Upload COBOL Check
       env:
         ZOWE_USERNAME: ${{ secrets.ZOWE_USERNAME }}
         ZOWE_PASSWORD: ${{ secrets.ZOWE_PASSWORD }}
+        ZOWE_HOST: 204.90.115.200
+        ZOWE_PORT: 10443
       run: |
         chmod +x .github/scripts/zowe_operations.sh
         .github/scripts/zowe_operations.sh
+
     - name: Run COBOL Check on Mainframe
       env:
         ZOWE_USERNAME: ${{ secrets.ZOWE_USERNAME }}
         ZOWE_PASSWORD: ${{ secrets.ZOWE_PASSWORD }}
+        ZOWE_HOST: 204.90.115.200
+        ZOWE_PORT: 10443
       run: |
         chmod +x .github/scripts/mainframe_operations.sh
-        .github/scripts/mainframe_operations.sh  
+        .github/scripts/mainframe_operations.sh
         
