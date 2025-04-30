@@ -52,29 +52,29 @@ echo "program = $program"
 
 # Truncate or Normalize Imputs
 DSNAME_PROGRAM=$(echo "$program" | cut -c1-8)
-DSNAME_USER=$(echo "$ZOWE_USERNAME" | cut -c1-8)
+# DSNAME_USER=$(echo "$ZOWE_USERNAME" | cut -c1-8)
 # Upload the generated COBOL test file to MVS
 if [[ -f "CC##99.CBL" ]]; then
-  zowe zos-files upload file-to-data-set "CC##99.CBL" "//${DSNAME_USER}.CBL(${DSNAME_PROGRAM})" \
+  zowe zos-files upload file-to-data-set "CC##99.CBL" "//${ZOWE_USERNAME}.CBL(${DSNAME_PROGRAM})" \
     --user "$ZOWE_USERNAME" \
     --password "$ZOWE_PASSWORD" \
     --host "$ZOWE_HOST" \
     --port "$ZOWE_PORT" \
     --reject-unauthorized false
-  echo "📤 Uploaded CC##99.CBL to ${DSNAME_USER}.CBL(${DSNAME_PROGRAM})"
+  echo "📤 Uploaded CC##99.CBL to ${ZOWE_USERNAME}.CBL(${DSNAME_PROGRAM})"
 else
   echo "❌ CC##99.CBL not found — skipping COBOL upload for $program"
 fi
 
 # Upload the existing JCL to MVS
 if [[ -f "${program}.JCL" ]]; then
-  zowe zos-files upload file-to-data-set "${program}.JCL" "//${DSNAME_USER}.JCL(${DSNAME_PROGRAM})" \
+  zowe zos-files upload file-to-data-set "${program}.JCL" "//${ZOWE_USERNAME}.JCL(${DSNAME_PROGRAM})" \
     --user "$ZOWE_USERNAME" \
     --password "$ZOWE_PASSWORD" \
     --host "$ZOWE_HOST" \
     --port "$ZOWE_PORT" \
     --reject-unauthorized false
-  echo "📤 Uploaded ${program}.JCL to ${DSNAME_USER}.JCL(${DSNAME_PROGRAM})"
+  echo "📤 Uploaded ${program}.JCL to ${ZOWE_USERNAME}.JCL(${DSNAME_PROGRAM})"
 else
   echo "❌ ${program}.JCL not found — cannot upload to MVS"
 fi
